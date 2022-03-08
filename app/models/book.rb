@@ -1,11 +1,10 @@
 class Book < ApplicationRecord
-
   belongs_to :user
   has_many :book_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
   validates :title, presence: true
-  validates :body, presence: true, length:{maximum:200}
+  validates :body, presence: true, length: { maximum: 200 }
 
   is_impressionable
 
@@ -22,8 +21,6 @@ class Book < ApplicationRecord
   scope :created_4day_ago, -> { where(created_at: 4.day.ago.all_day) } # 4日前
   scope :created_5day_ago, -> { where(created_at: 5.day.ago.all_day) } # 5日前
   scope :created_6day_ago, -> { where(created_at: 6.day.ago.all_day) } # 6日前
-  
-
 
   def self.looks(search, word)
     if search == "perfect_match"
@@ -38,7 +35,6 @@ class Book < ApplicationRecord
       @book = Book.all
     end
   end
-
 
   def favorited_by?(user)
     favorites.where(user_id: user.id).exists?

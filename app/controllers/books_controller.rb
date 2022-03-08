@@ -1,9 +1,8 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
-  
-  impressionist :actions=> [:show]
 
+  impressionist :actions => [:show]
 
   def show
     @book = Book.find(params[:id])
@@ -13,7 +12,7 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new
-    @books = Book.all.sort {|a,b| b.favorites.where(created_at: Time.current.all_week).size <=> a.favorites.where(created_at: Time.current.all_week).size}
+    @books = Book.all.sort { |a, b| b.favorites.where(created_at: Time.current.all_week).size <=> a.favorites.where(created_at: Time.current.all_week).size }
   end
 
   def create
@@ -48,7 +47,6 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body, :prifile_image, :evaluation)
   end
-
 
   def ensure_correct_user
     @book = Book.find(params[:id])
